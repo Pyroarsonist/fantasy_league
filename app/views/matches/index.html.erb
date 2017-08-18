@@ -1,0 +1,11 @@
+<h1>Listing Matches</h1>
+<table>
+  <tr>
+    <td><%= "Nickname Team  Kills(Headshots)/Assists/Deaths KAST ADR fk_diff fantasy_points" %></td>
+  </tr>
+  <% @stats.each do |stat| %>
+        <tr>
+          <td><%= "#{stat.name} #{stat.team} #{stat.kills}(#{stat.heads})/#{stat.assists}/#{stat.deaths} #{stat.adr} #{sprintf"%.3f",stat.fantasy_points.to_f}" %></td>
+        </tr>
+<% end %>
+</table>
