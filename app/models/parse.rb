@@ -17,9 +17,9 @@ class Parse
     result=[]
     stats.each do |stat| #NEED PARSE MATCHES FROM BO3
       doc=Nokogiri::HTML(open(stat))
-      isbo3=doc.css('div.columns a.inactive').map {|link| @hltv+link['href']}
-      if isbo3!=[]
-        isbo3.each {|bo1| result+=[bo1]}
+      isntbo1=doc.css('div.columns a.inactive').map {|link| @hltv+link['href']}
+      if isntbo1!=[]
+        isntbo1.each {|bo1| result+=[bo1]}
       else
         result+=[stat]
       end

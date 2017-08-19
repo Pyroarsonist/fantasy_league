@@ -14,5 +14,41 @@ class PlayerMatch < ApplicationRecord
     end
   end
 
+  def self.get_max_fantasy_points()
+    player_match=PlayerMatch.all.first
+
+    PlayerMatch.all.each do |pl_m|
+      if (player_match.fantasy_points<pl_m.fantasy_points)
+        player_match=pl_m
+      end
+    end
+    player_match
+  end
+
+  def self.get_min_fantasy_points()
+    player_match=PlayerMatch.all.first
+
+    PlayerMatch.all.each do |pl_m|
+      if (player_match.fantasy_points>pl_m.fantasy_points)
+        player_match=pl_m
+      end
+    end
+    player_match
+  end
+
+  def self.get_avg_fantasy_points()
+
+    fant_p_sum=0
+    counter=0
+
+    PlayerMatch.all.each do |pl_m|
+      fant_p_sum+=pl_m.fantasy_points
+      counter=counter.next
+    end
+    fant_p=fant_p_sum/counter
+    fant_p
+
+  end
+
 
 end

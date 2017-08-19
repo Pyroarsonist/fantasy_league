@@ -1,11 +1,22 @@
 <h1>Listing Matches</h1>
+
+
+
+<% require 'json' %>
 <table>
   <tr>
-    <td><%= "Nickname Team  Kills(Headshots)/Assists/Deaths KAST ADR fk_diff fantasy_points" %></td>
+    <td><%= "#{@max.name} #{@max.team} #{@max.kills}(#{@max.heads})/#{@max.assists}/#{@max.deaths} #{@max.adr} #{sprintf "%.3f", @max.fantasy_points.to_f}" %></td>
   </tr>
-  <% @stats.each do |stat| %>
-        <tr>
-          <td><%= "#{stat.name} #{stat.team} #{stat.kills}(#{stat.heads})/#{stat.assists}/#{stat.deaths} #{stat.adr} #{sprintf"%.3f",stat.fantasy_points.to_f}" %></td>
-        </tr>
-<% end %>
+  <tr>
+    <td><%= "#{@min.name} #{@min.team} #{@min.kills}(#{@min.heads})/#{@min.assists}/#{@min.deaths} #{@min.adr} #{sprintf "%.3f", @min.fantasy_points.to_f}" %></td>
+  </tr>
+  <tr>
+
+    <td><%= "#{@avg}" %></td>
+  </tr>
+  <% @gamers.each do |gamer| %>
+      <tr>
+        <td><%= "#{gamer.name} #{gamer.team}  " %></td>
+      </tr>
+  <% end %>
 </table>
