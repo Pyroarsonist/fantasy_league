@@ -1,7 +1,7 @@
 class PlayerMatch < ApplicationRecord
   @COEF=60.to_f
 
-  def self.get_stats()
+  def self.get_stats
     Match.all.each do |match|
       stats=Parse.parse_stats_from_match(match.site)
       stats.each do |stat|
@@ -14,29 +14,27 @@ class PlayerMatch < ApplicationRecord
     end
   end
 
-  def self.get_max_fantasy_points()
-    player_match=PlayerMatch.all.first
+  def self.get_max_fantasy_points
+    player_match_all=PlayerMatch.all
+    player_match=player_match_all.first
 
-    PlayerMatch.all.each do |pl_m|
-      if (player_match.fantasy_points<pl_m.fantasy_points)
-        player_match=pl_m
-      end
+    player_match_all.each do |pl_m|
+      player_match=pl_m if player_match.fantasy_points<pl_m.fantasy_points
     end
     player_match
   end
 
-  def self.get_min_fantasy_points()
-    player_match=PlayerMatch.all.first
+  def self.get_min_fantasy_points
+    player_match_all=PlayerMatch.all
+    player_match=player_match_all.first
 
-    PlayerMatch.all.each do |pl_m|
-      if (player_match.fantasy_points>pl_m.fantasy_points)
-        player_match=pl_m
-      end
+    player_match_all.each do |pl_m|
+      player_match=pl_m if player_match.fantasy_points>pl_m.fantasy_points
     end
     player_match
   end
 
-  def self.get_avg_fantasy_points()
+  def self.get_avg_fantasy_points
 
     fant_p_sum=0
     counter=0
