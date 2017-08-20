@@ -1,8 +1,6 @@
 require 'open-uri'
 require 'nokogiri'
 class Parse
-  @major_krakow='2720'
-  @event="https://www.hltv.org/results?event=#{@major_krakow}"
   @hltv='https://www.hltv.org'
   offset_start=0
   @url = "https://www.hltv.org/results?offset=#{offset_start}&content=stats"
@@ -15,7 +13,7 @@ class Parse
       stats += doc.css('div.stats-detailed-stats a').map {|link| @hltv+link['href']}
     end
     result=[]
-    stats.each do |stat| #NEED PARSE MATCHES FROM BO3
+    stats.each do |stat|
       doc=Nokogiri::HTML(open(stat))
       isntbo1=doc.css('div.columns a.inactive').map {|link| @hltv+link['href']}
       if isntbo1!=[]
@@ -27,8 +25,9 @@ class Parse
     result
   end
 
-  def self.parse_from_page () #NEED PARSE MATCHES FROM BO3
-    doc = Nokogiri::HTML(open(@event))
+  def self.parse_from_page(event_id)
+    event_site="https://www.hltv.org/results?event=#{event_id}"
+    doc = Nokogiri::HTML(open(event_site))
     matches = doc.css('div.result-con a').map {|link| @hltv+link['href']}
     stats = parse_to_stats_url (matches)
     stats

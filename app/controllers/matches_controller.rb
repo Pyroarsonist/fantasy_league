@@ -4,7 +4,8 @@ class MatchesController < ApplicationController
   # GET /matches.json
   def index
     # Match.all.delete_all
-    #Match.get_sites
+    #major_krakow_id='2720'
+    #Match.get_sites major_krakow_id
     @matches = Match.all
     #@values=[4,3,2,3,1,5,3,4,2,0]
     #PlayerMatch.all.delete_all
