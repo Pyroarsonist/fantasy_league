@@ -39,13 +39,39 @@ class Gamer < ApplicationRecord
     end
   end
 
-  def self.get_from_json_matches_to_array(gamer)
+  def self.get_from_json_matches_to_array(gamer) # array of hashes of player's matches
     string_array_json=gamer[:match_all]
     array=[]
     string_array_json.each do |s_j|
       array+=JSON.parse(s_j)
     end
     array
+  end
+
+  def self.get_avg_stats(gamer)
+    matches = get_from_json_matches_to_array gamer
+    kills=0
+    heads=0
+    assists=0
+    deaths=0
+    adr=0
+    fantasy_points=0
+    matches.each do |m|
+      kills+=m['kills'].to_f
+      assists+=m['assists'].to_f
+      heads+=m['heads'].to_f
+      deaths+=m['deaths'].to_f
+      adr+=m['adr'].to_f
+      fantasy_points+=m['fantasy_points'].to_f
+    end
+    num_of_m=matches.size
+    kills/=num_of_m
+    heads/=num_of_m
+    assists/=num_of_m
+    deaths/=num_of_m
+    adr/=num_of_m
+    fantasy_points/=num_of_m
+    {kills: kills, heads: heads, assists: assists, deaths: deaths, adr: adr, fantasy_points: fantasy_points}
   end
 
 end

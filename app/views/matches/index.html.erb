@@ -14,9 +14,57 @@
 
     <td><%= "average : #{@avg}" %></td>
   </tr>
-  <% @gamers.each do |gamer| %>
+</table>
+<table>
+  <tr>
+    <td>Team</td>
+    <td>Player</td>
+    <td>Kills</td>
+    <td>Headshots</td>
+    <td>Assists</td>
+    <td>Deaths</td>
+    <td>ADR</td>
+    <td>Fantasy Points</td>
+  </tr>
+  <% @stats.each do |stat| %>
       <tr>
-        <td><%= "#{gamer.name} #{gamer.team}  " %></td>
+        <td><%= "#{stat.team}" %> </td>
+        <td><%= "#{stat.name}" %></td>
+        <td><%= "#{sprintf "%.3f", stat[:kills]}" %></td>
+        <td><%= "#{sprintf "%.3f", stat[:heads]}" %></td>
+        <td><%= "#{sprintf "%.3f", stat[:assists]}" %></td>
+        <td><%= "#{sprintf "%.3f", stat[:deaths]}" %></td>
+        <td><%= "#{sprintf "%.3f", stat[:adr]}" %></td>
+        <td><%= "#{sprintf "%.3f", stat[:fantasy_points]}" %></td>
+      </tr>
+  <% end %>
+
+</table>
+
+
+<table>
+  <tr>
+    <td>Team</td>
+    <td>Player</td>
+    <td>Kills</td>
+    <td>Headshots</td>
+    <td>Assists</td>
+    <td>Deaths</td>
+    <td>ADR</td>
+    <td>Fantasy Points</td>
+  </tr>
+
+  <% @gamers.each do |gamer| %>
+      <% avgs=Gamer.get_avg_stats(gamer) %>
+      <tr>
+        <td><%= "#{gamer.team}" %> </td>
+        <td><%= "#{gamer.name}" %></td>
+        <td><%= "#{sprintf "%.3f", avgs[:kills]}" %></td>
+        <td><%= "#{sprintf "%.3f", avgs[:heads]}" %></td>
+        <td><%= "#{sprintf "%.3f", avgs[:assists]}" %></td>
+        <td><%= "#{sprintf "%.3f", avgs[:deaths]}" %></td>
+        <td><%= "#{sprintf "%.3f", avgs[:adr]}" %></td>
+        <td><%= "#{sprintf "%.3f", avgs[:fantasy_points]}" %></td>
       </tr>
   <% end %>
 </table>

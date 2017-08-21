@@ -1,11 +1,16 @@
 class PlayerMatch < ApplicationRecord
   @COEF=60.to_f
 
+  def calculate_fantasy_points (kills, deaths, assists, heads, adr)
+    fantasy_points=(kills.to_f-deaths.to_f+assists.to_f/2+heads.to_f/4)*adr.to_f/@COEF
+    fantasy_points
+  end
+
   def self.get_stats
     Match.all.each do |match|
       stats=Parse.parse_stats_from_match(match.site)
-      stats.each do |stat|
-        fantasy_points=(stat[:kills].to_f-stat[:deaths].to_f+stat[:assists].to_f/2+stat[:heads].to_f/4)*stat[:adr].to_f/@COEF
+      stats.each do |stat| # TODO delete fantasy_points and add it on site, coz it static now
+        fantasy_points=calculate_fantasy_points(stat[:kills], stat[:deaths], stat[:assists], stat[:heads], stat[:adr])
         PlayerMatch.create(url: stat[:url], name: stat[:name], name_id: stat[:name_id],
                            team: stat[:team], team_id: stat[:team_id], kills: stat[:kills], heads: stat[:heads],
                            assists: stat[:assists], deaths: stat[:deaths], adr: stat[:adr], fantasy_points: fantasy_points)
